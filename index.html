@@ -3,8 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GASRI NADJI - Programmer & Security Enthusiast</title>
+    <title>سينما - شاهد أفضل الأفلام والمسلسلات</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #141824;
+            --bg-card: #1a1f2e;
+            --accent-primary: #e50914;
+            --accent-secondary: #ff1744;
+            --text-primary: #ffffff;
+            --text-secondary: #b8bcc8;
+            --text-muted: #6c7589;
+            --border-color: #2a2f3e;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+            --shadow-glow: 0 0 40px rgba(229, 9, 20, 0.3);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,758 +31,995 @@
         }
 
         body {
-            font-family: 'Courier New', monospace;
-            background: #0a0a0a;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            position: relative;
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* خلفية برمجية متحركة */
-        .matrix-bg {
+        /* Background Animation */
+        .animated-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
-            opacity: 0.15;
+            z-index: -1;
+            overflow: hidden;
         }
 
-        .code-lines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .code-line {
+        .animated-bg::before {
+            content: '';
             position: absolute;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            color: #00ff41;
-            opacity: 0.3;
-            white-space: nowrap;
-            animation: float 20s linear infinite;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(229, 9, 20, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 23, 68, 0.06) 0%, transparent 50%);
+            animation: bgMove 30s ease-in-out infinite;
         }
 
-        @keyframes float {
-            from {
-                transform: translateY(-100px);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.3;
-            }
-            90% {
-                opacity: 0.3;
-            }
-            to {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
+        @keyframes bgMove {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(5%, -5%) rotate(5deg); }
+            66% { transform: translate(-5%, 5%) rotate(-5deg); }
         }
 
-        /* تأثير الدوائر البرمجية */
-        .circuit-bg {
-            position: fixed;
+        /* Header */
+        header {
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 255, 65, 0.1), transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 168, 255, 0.1), transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(138, 43, 226, 0.1), transparent 50%);
-            z-index: 0;
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        /* رسائل الترحيب المتحركة */
-        .welcome-message {
-            position: fixed;
-            top: 20px;
-            right: 50%;
-            transform: translateX(50%);
-            background: rgba(0, 255, 65, 0.1);
-            border: 1px solid #00ff41;
-            border-radius: 8px;
-            padding: 12px 25px;
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            font-weight: bold;
             z-index: 1000;
-            animation: slideDown 0.5s ease, fadeOut 4s ease 2s forwards;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+            background: rgba(10, 14, 23, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            animation: slideDown 0.5s ease-out;
         }
 
         @keyframes slideDown {
             from {
-                top: -50px;
+                transform: translateY(-100%);
                 opacity: 0;
             }
             to {
-                top: 20px;
+                transform: translateY(0);
                 opacity: 1;
             }
         }
 
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { 
-                opacity: 0;
-                top: -50px;
-            }
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
         }
 
-        .typing-effect {
-            overflow: hidden;
-            border-left: 2px solid #00ff41;
-            white-space: nowrap;
-            animation: typing 2s steps(40, end), blink 0.75s step-end infinite;
-        }
-
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink {
-            50% { border-color: transparent; }
-        }
-
-        .container {
-            max-width: 680px;
-            width: 100%;
-            background: rgba(10, 10, 10, 0.9);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 50px 35px;
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.8),
-                0 0 0 1px rgba(0, 255, 65, 0.2),
-                inset 0 0 50px rgba(0, 255, 65, 0.05);
-            animation: containerGlow 3s ease-in-out infinite;
-            position: relative;
-            z-index: 1;
-            border: 1px solid rgba(0, 255, 65, 0.3);
-        }
-
-        @keyframes containerGlow {
-            0%, 100% {
-                box-shadow: 
-                    0 20px 60px rgba(0, 0, 0, 0.8),
-                    0 0 0 1px rgba(0, 255, 65, 0.2),
-                    inset 0 0 50px rgba(0, 255, 65, 0.05);
-            }
-            50% {
-                box-shadow: 
-                    0 20px 60px rgba(0, 0, 0, 0.8),
-                    0 0 0 1px rgba(0, 255, 65, 0.4),
-                    inset 0 0 50px rgba(0, 255, 65, 0.1);
-            }
-        }
-
-        /* شعار البرمجة في الخلفية */
-        .terminal-header {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            color: #00ff41;
-            opacity: 0.5;
-        }
-
-        .terminal-header::before {
-            content: '$ ';
-            color: #00ff41;
-        }
-
-        .profile-section {
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        /* أيقونات برمجية حول الصورة */
-        .code-symbols {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
-            pointer-events: none;
-        }
-
-        .code-symbol {
-            position: absolute;
-            font-family: 'Courier New', monospace;
-            font-size: 20px;
-            color: #00ff41;
-            opacity: 0.3;
-            animation: orbit 10s linear infinite;
-        }
-
-        @keyframes orbit {
-            from { transform: rotate(0deg) translateX(80px) rotate(0deg); }
-            to { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
-        }
-
-        .profile-image-wrapper {
-            position: relative;
-            width: 140px;
-            height: 140px;
-            margin: 0 auto 25px;
-            z-index: 2;
-        }
-
-        .profile-image-wrapper::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            background: linear-gradient(45deg, #00ff41, #00a8ff, #8a2be2, #00ff41);
-            border-radius: 50%;
-            animation: rotate 4s linear infinite;
-            z-index: -1;
-        }
-
-        .profile-image-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: -8px;
-            background: conic-gradient(from 0deg, transparent, #00ff41, transparent);
-            border-radius: 50%;
-            animation: rotate 2s linear infinite reverse;
-            z-index: -2;
-            opacity: 0.5;
-        }
-
-        @keyframes rotate {
-            100% { transform: rotate(360deg); }
-        }
-
-        .profile-image {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            border: 4px solid #0a0a0a;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
-        }
-
-        .profile-image:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 50px rgba(0, 255, 65, 0.6);
-        }
-
-        .profile-name {
-            font-size: 34px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #00ff41, #00a8ff);
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 12px;
-            letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
-            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 30px rgba(229, 9, 20, 0.5);
+            letter-spacing: -1px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
-        .profile-title {
-            font-size: 16px;
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+        .logo:hover {
+            transform: scale(1.05);
         }
 
-        .profile-title::before {
-            content: '< ';
-            color: #00a8ff;
-        }
-
-        .profile-title::after {
-            content: ' />';
-            color: #00a8ff;
-        }
-
-        .profile-bio {
-            font-size: 15px;
-            color: #888;
-            line-height: 1.8;
-            margin-bottom: 8px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-
-        .profile-username {
-            font-size: 14px;
-            color: #00a8ff;
-            font-weight: 600;
-            font-family: 'Courier New', monospace;
-        }
-
-        .profile-username::before {
-            content: '>> ';
-            color: #00ff41;
-        }
-
-        .links-section {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            padding: 20px 24px;
-            background: rgba(0, 255, 65, 0.05);
-            border: 1px solid rgba(0, 255, 65, 0.2);
-            border-radius: 12px;
-            text-decoration: none;
-            color: #fff;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        .search-container {
+            flex: 1;
+            max-width: 600px;
             position: relative;
-            overflow: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
-        .social-link::before {
+        .search-box {
+            width: 100%;
+            padding: 0.9rem 3rem 0.9rem 1.5rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 0;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-primary);
+            transition: width 0.3s ease;
         }
 
-        .social-link:hover::before {
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(229, 9, 20, 0.1);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
             left: 0;
         }
 
-        .social-link:hover {
-            transform: translateX(-8px) scale(1.03);
-            border-color: transparent;
-            box-shadow: 0 8px 32px rgba(0, 255, 65, 0.3);
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 70vh;
+            margin-bottom: 3rem;
+            overflow: hidden;
+            border-radius: 0 0 30px 30px;
         }
 
-        .instagram::before {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(10, 14, 23, 0.3), rgba(10, 14, 23, 0.9)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23141824" width="1200" height="600"/><g fill-opacity="0.1"><polygon fill="%23e50914" points="1200 0 900 600 1200 600"/><polygon fill="%23ff1744" points="0 600 300 0 0 0"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+            animation: heroZoom 20s ease-in-out infinite;
         }
 
-        .tiktok::before {
-            background: linear-gradient(135deg, #000000, #00f2ea, #ff0050);
+        @keyframes heroZoom {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
-        .twitter::before {
-            background: #000000;
+        .hero-content {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out;
         }
 
-        .facebook::before {
-            background: linear-gradient(135deg, #0866FF, #004FC6);
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .telegram::before {
-            background: linear-gradient(135deg, #2AABEE, #229ED9);
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+            animation: fadeInUp 1s ease-out 0.2s both;
         }
 
-        .icon-wrapper {
-            width: 50px;
-            height: 50px;
-            margin-left: 16px;
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(229, 9, 20, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            position: relative;
+            padding-right: 1rem;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+            border-radius: 2px;
+        }
+
+        .view-all {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            background: rgba(0, 255, 65, 0.1);
-            z-index: 1;
+            gap: 0.5rem;
             transition: all 0.3s ease;
-            border: 1px solid rgba(0, 255, 65, 0.2);
         }
 
-        .social-link:hover .icon-wrapper {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.2) rotate(-10deg);
-            border-color: rgba(255, 255, 255, 0.3);
+        .view-all:hover {
+            gap: 1rem;
         }
 
-        .icon-wrapper svg {
-            width: 26px;
-            height: 26px;
-            z-index: 1;
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
 
-        .link-content {
-            flex: 1;
-            z-index: 1;
+        .filter-tab {
+            padding: 0.7rem 1.5rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .link-text {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 3px;
-            letter-spacing: 0.5px;
+        .filter-tab:hover,
+        .filter-tab.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
-        .link-handle {
-            font-size: 13px;
-            opacity: 0.7;
-            font-weight: 500;
-            font-family: 'Courier New', monospace;
+        /* Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 2rem;
         }
 
-        .arrow {
-            font-size: 22px;
-            z-index: 1;
-            transition: transform 0.3s ease;
-            opacity: 0.6;
+        .content-card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            animation: fadeIn 0.5s ease-out both;
         }
 
-        .social-link:hover .arrow {
-            transform: translateX(-10px);
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .content-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-image {
+            width: 100%;
+            aspect-ratio: 2/3;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .content-card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+        }
+
+        .content-card:hover .card-overlay {
             opacity: 1;
         }
 
-        .footer {
+        .card-info {
+            padding: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 60px;
+            height: 60px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(229, 9, 20, 0.6);
+        }
+
+        .content-card:hover .play-button {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.3rem 0.8rem;
+            background: var(--accent-primary);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        /* Loading */
+        .loading {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 25px;
-            border-top: 1px solid rgba(0, 255, 65, 0.2);
+            padding: 4rem;
+            color: var(--text-muted);
         }
 
-        .footer-text {
-            color: #555;
-            font-size: 12px;
-            font-family: 'Courier New', monospace;
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
         }
 
-        .footer-text::before {
-            content: '// ';
-            color: #00ff41;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
-        /* شريط التحميل في الأعلى */
-        .loading-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: rgba(0, 255, 65, 0.2);
-            z-index: 9999;
+        /* Search Results */
+        .search-results {
+            display: none;
+            margin-top: 2rem;
         }
 
-        .loading-progress {
-            height: 100%;
-            background: linear-gradient(90deg, #00ff41, #00a8ff);
-            width: 0;
-            animation: loadProgress 2s ease forwards;
+        .search-results.active {
+            display: block;
         }
 
-        @keyframes loadProgress {
-            to { width: 100%; }
+        .no-results {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-muted);
         }
 
-        @media (max-width: 480px) {
-            .container {
-                padding: 40px 25px;
+        .no-results-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            margin-top: 5rem;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-primary);
+        }
+
+        .copyright {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
             }
 
-            .profile-name {
-                font-size: 28px;
+            .nav-links {
+                width: 100%;
+                justify-content: center;
             }
 
-            .social-link {
-                padding: 18px 20px;
+            .hero-title {
+                font-size: 2.5rem;
             }
 
-            .icon-wrapper {
-                width: 46px;
-                height: 46px;
+            .hero-subtitle {
+                font-size: 1rem;
             }
 
-            .link-text {
-                font-size: 17px;
+            .content-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
             }
 
-            .code-line {
-                font-size: 10px;
+            .section-title {
+                font-size: 1.5rem;
             }
+        }
+
+        /* Categories Slider */
+        .categories-slider {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-primary) var(--bg-card);
+        }
+
+        .categories-slider::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .categories-slider::-webkit-scrollbar-track {
+            background: var(--bg-card);
+            border-radius: 10px;
+        }
+
+        .categories-slider::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 10px;
+        }
+
+        .category-card {
+            min-width: 200px;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-name {
+            font-weight: 600;
+            font-size: 1.1rem;
         }
     </style>
 </head>
 <body>
-    <!-- شريط التحميل -->
-    <div class="loading-bar">
-        <div class="loading-progress"></div>
-    </div>
+    <div class="animated-bg"></div>
 
-    <!-- رسالة الترحيب -->
-    <div class="welcome-message" id="welcomeMsg">
-        <span class="typing-effect">مرحباً! Welcome to my links 👋</span>
-    </div>
-
-    <!-- خلفية برمجية -->
-    <div class="circuit-bg"></div>
-    <canvas class="matrix-bg" id="matrixCanvas"></canvas>
-    <div class="code-lines" id="codeLines"></div>
-
-    <div class="container">
-        <div class="terminal-header">gasri@nadji:~</div>
-
-        <div class="profile-section">
-            <div class="code-symbols">
-                <span class="code-symbol" style="animation-delay: 0s;">{</span>
-                <span class="code-symbol" style="animation-delay: -2.5s;">}</span>
-                <span class="code-symbol" style="animation-delay: -5s;"><</span>
-                <span class="code-symbol" style="animation-delay: -7.5s;">/></span>
+    <header>
+        <nav>
+            <div class="logo">سينما</div>
+            <div class="search-container">
+                <input type="text" class="search-box" id="searchInput" placeholder="ابحث عن أفلام، مسلسلات، ممثلين...">
+                <span class="search-icon">🔍</span>
             </div>
-
-            <div class="profile-image-wrapper">
-                <img src="data:image/jpeg;base64,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" alt="GASRI NADJI" class="profile-image" id="profileImg">
+            <div class="nav-links">
+                <a href="#" class="nav-link" data-filter="all">الرئيسية</a>
+                <a href="#" class="nav-link" data-filter="movie">أفلام</a>
+                <a href="#" class="nav-link" data-filter="serie">مسلسلات</a>
+                <a href="#" class="nav-link" data-filter="ramadan">رمضان 2025</a>
             </div>
-            <div class="profile-title">Programmer</div>
-            <h1 class="profile-name">GASRI NADJI</h1>
-            <p class="profile-bio">Beginner Programmer Interested In Information Security 🛡️<br>مبرمج مبتدئ مهتم بأمن المعلومات</p>
-            <p class="profile-username">gasrinadji</p>
-        </div>
+        </nav>
+    </header>
 
-        <div class="links-section">
-            
-            <a href="https://instagram.com/gasri_nadji" target="_blank" class="social-link instagram">
-                <div class="icon-wrapper">
-                    <svg viewBox="0 0 24 24" fill="url(#instagram-gradient)">
-                        <defs>
-                            <radialGradient id="instagram-gradient" cx="30%" cy="107%">
-                                <stop offset="0%" style="stop-color:#fdf497" />
-                                <stop offset="5%" style="stop-color:#fdf497" />
-                                <stop offset="45%" style="stop-color:#fd5949" />
-                                <stop offset="60%" style="stop-color:#d6249f" />
-                                <stop offset="90%" style="stop-color:#285AEB" />
-                            </radialGradient>
-                        </defs>
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                    </svg>
-                </div>
-                <div class="link-content">
-                    <div class="link-text">Instagram</div>
-                    <div class="link-handle">@gasri_nadji</div>
-                </div>
-                <span class="arrow">←</span>
-            </a>
-
-            <a href="https://tiktok.com/@gasri_nadji" target="_blank" class="social-link tiktok">
-                <div class="icon-wrapper">
-                    <svg viewBox="0 0 24 24" fill="#00f2ea">
-                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-                    </svg>
-                </div>
-                <div class="link-content">
-                    <div class="link-text">TikTok</div>
-                    <div class="link-handle">@gasri_nadji</div>
-                </div>
-                <span class="arrow">←</span>
-            </a>
-
-            <a href="https://x.com/NadjiGasri" target="_blank" class="social-link twitter">
-                <div class="icon-wrapper">
-                    <svg viewBox="0 0 24 24" fill="#ffffff">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                </div>
-                <div class="link-content">
-                    <div class="link-text">Twitter (X)</div>
-                    <div class="link-handle">@NadjiGasri</div>
-                </div>
-                <span class="arrow">←</span>
-            </a>
-
-            <a href="https://www.facebook.com/GASRI.NADJI?mibextid=ZbWKwL" target="_blank" class="social-link facebook">
-                <div class="icon-wrapper">
-                    <svg viewBox="0 0 24 24" fill="#0866FF">
-                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                    </svg>
-                </div>
-                <div class="link-content">
-                    <div class="link-text">Facebook</div>
-                    <div class="link-handle">GASRI NADJI</div>
-                </div>
-                <span class="arrow">←</span>
-            </a>
-
-            <a href="https://t.me/ffdks" target="_blank" class="social-link telegram">
-                <div class="icon-wrapper">
-                    <svg viewBox="0 0 24 24" fill="#2AABEE">
-                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                    </svg>
-                </div>
-                <div class="link-content">
-                    <div class="link-text">Telegram</div>
-                    <div class="link-handle">@ffdks</div>
-                </div>
-                <span class="arrow">←</span>
-            </a>
-
-        </div>
-
-        <div class="footer">
-            <p class="footer-text">Developed by GASRI NADJI © 2024</p>
+    <div class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">استمتع بأفضل الأفلام والمسلسلات</h1>
+            <p class="hero-subtitle">شاهد آلاف الأفلام والمسلسلات العربية والأجنبية بجودة عالية</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollToContent()">
+                    ▶ ابدأ المشاهدة
+                </button>
+                <button class="btn btn-secondary">
+                    ℹ️ المزيد من المعلومات
+                </button>
+            </div>
         </div>
     </div>
+
+    <main>
+        <!-- Featured Content -->
+        <section class="section" id="featured">
+            <div class="section-header">
+                <h2 class="section-title">مميز لك</h2>
+            </div>
+            <div class="content-grid" id="featuredGrid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>جاري التحميل...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ramadan Series -->
+        <section class="section" id="ramadan">
+            <div class="section-header">
+                <h2 class="section-title">مسلسلات رمضان 2025</h2>
+                <a href="#" class="view-all">عرض الكل ←</a>
+            </div>
+            <div class="content-grid" id="ramadanGrid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>جاري التحميل...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">تصفح حسب النوع</h2>
+            </div>
+            <div class="categories-slider">
+                <div class="category-card" onclick="filterByCategory('أكشن')">
+                    <div class="category-icon">💥</div>
+                    <div class="category-name">أكشن</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('كوميديا')">
+                    <div class="category-icon">😂</div>
+                    <div class="category-name">كوميديا</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('دراما')">
+                    <div class="category-icon">🎭</div>
+                    <div class="category-name">دراما</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('رومانسي')">
+                    <div class="category-icon">❤️</div>
+                    <div class="category-name">رومانسي</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('رعب')">
+                    <div class="category-icon">👻</div>
+                    <div class="category-name">رعب</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('خيال علمي')">
+                    <div class="category-icon">🚀</div>
+                    <div class="category-name">خيال علمي</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Movies -->
+        <section class="section" id="movies">
+            <div class="section-header">
+                <h2 class="section-title">أفلام شائعة</h2>
+                <a href="#" class="view-all">عرض الكل ←</a>
+            </div>
+            <div class="filter-tabs">
+                <div class="filter-tab active" onclick="filterMovies('rating')">الأعلى تقييماً</div>
+                <div class="filter-tab" onclick="filterMovies('created')">الأحدث</div>
+                <div class="filter-tab" onclick="filterMovies('views')">الأكثر مشاهدة</div>
+            </div>
+            <div class="content-grid" id="moviesGrid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>جاري التحميل...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Series -->
+        <section class="section" id="series">
+            <div class="section-header">
+                <h2 class="section-title">مسلسلات شائعة</h2>
+                <a href="#" class="view-all">عرض الكل ←</a>
+            </div>
+            <div class="filter-tabs">
+                <div class="filter-tab active" onclick="filterSeries('rating')">الأعلى تقييماً</div>
+                <div class="filter-tab" onclick="filterSeries('created')">الأحدث</div>
+            </div>
+            <div class="content-grid" id="seriesGrid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>جاري التحميل...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Results -->
+        <section class="section search-results" id="searchResults">
+            <div class="section-header">
+                <h2 class="section-title">نتائج البحث</h2>
+            </div>
+            <div class="content-grid" id="searchGrid"></div>
+            <div class="no-results" id="noResults" style="display: none;">
+                <div class="no-results-icon">🔍</div>
+                <h3>لم يتم العثور على نتائج</h3>
+                <p>حاول البحث بكلمات مختلفة</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" class="footer-link">عن الموقع</a>
+                <a href="#" class="footer-link">سياسة الخصوصية</a>
+                <a href="#" class="footer-link">شروط الاستخدام</a>
+                <a href="#" class="footer-link">اتصل بنا</a>
+            </div>
+            <p class="copyright">© 2025 سينما - جميع الحقوق محفوظة</p>
+        </div>
+    </footer>
 
     <script>
-        // Matrix Effect Background
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
+        // This is a frontend demo. You need to integrate with your PHP backend API
+        // Replace these URLs with your actual API endpoints
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        const API_BASE = 'api.php'; // Your PHP API file
 
-        const characters = '01アイウエオカキクケコサシスセソタチツテト10';
-        const fontSize = 14;
-        const columns = canvas.width / fontSize;
-
-        const drops = Array(Math.floor(columns)).fill(1);
-
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#00ff41';
-            ctx.font = fontSize + 'px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = characters.charAt(Math.floor(Math.random() * characters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-
-                drops[i]++;
+        // Simulate API calls (replace with actual fetch to your PHP backend)
+        async function fetchContent(endpoint) {
+            try {
+                const response = await fetch(`${API_BASE}?action=${endpoint}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching content:', error);
+                return [];
             }
         }
 
-        setInterval(drawMatrix, 50);
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        // أكواد برمجية متحركة
-        const codeSnippets = [
-            'function hack() { return "Hello World"; }',
-            'const security = true;',
-            'if (programmer === true) { console.log("GASRI"); }',
-            'import { skills } from "programming";',
-            'class Developer { constructor() { } }',
-            'while (learning) { improve(); }',
-            'const passion = "Cybersecurity";',
-            'npm install success',
-            'git commit -m "New features"',
-            'sudo apt-get install knowledge'
-        ];
-
-        function createCodeLine() {
-            const codeLines = document.getElementById('codeLines');
-            const line = document.createElement('div');
-            line.className = 'code-line';
-            line.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-            line.style.left = Math.random() * 100 + '%';
-            line.style.animationDuration = (15 + Math.random() * 10) + 's';
-            line.style.animationDelay = Math.random() * 5 + 's';
+        // Create content card
+        function createContentCard(item) {
+            const rating = item.rating || '7.5';
+            const year = item.year || '2024';
+            const type = item.type || 'movie';
+            const imageUrl = item.image || item.poster || 'https://via.placeholder.com/300x450?text=No+Image';
             
-            codeLines.appendChild(line);
-
-            setTimeout(() => {
-                line.remove();
-            }, 25000);
+            return `
+                <div class="content-card" onclick="openContent('${item.id}', '${type}')" style="animation-delay: ${Math.random() * 0.3}s">
+                    ${item.is_new ? '<span class="badge">جديد</span>' : ''}
+                    <img src="${imageUrl}" alt="${item.title}" class="card-image" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
+                    <div class="card-overlay">
+                        <div class="play-button">▶</div>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">${item.title || item.name}</h3>
+                        <div class="card-meta">
+                            <span class="card-rating">⭐ ${rating}</span>
+                            <span>${year}</span>
+                            <span>${type === 'movie' ? 'فيلم' : 'مسلسل'}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
-        setInterval(createCodeLine, 3000);
-        for(let i = 0; i < 5; i++) {
-            setTimeout(createCodeLine, i * 600);
-        }
-
-        // رسائل ترحيب متعددة
-        const welcomeMessages = [
-            'مرحباً! Welcome to my links 👋',
-            'System.out.println("Hello!"); 💻',
-            'console.log("Welcome"); 🚀',
-            'Loading profile... ⚡',
-            'Access Granted ✓',
-            '< Programmer /> 🔐'
-        ];
-
-        let messageIndex = 0;
-        function changeWelcomeMessage() {
-            const welcomeMsg = document.getElementById('welcomeMsg');
-            messageIndex = (messageIndex + 1) % welcomeMessages.length;
+        // Load featured content
+        async function loadFeatured() {
+            const grid = document.getElementById('featuredGrid');
+            const content = await fetchContent('featured');
             
-            setTimeout(() => {
-                welcomeMsg.innerHTML = `<span class="typing-effect">${welcomeMessages[messageIndex]}</span>`;
-                welcomeMsg.style.animation = 'none';
-                setTimeout(() => {
-                    welcomeMsg.style.animation = 'slideDown 0.5s ease, fadeOut 4s ease 2s forwards';
-                }, 10);
-            }, 4500);
+            if (content && content.length > 0) {
+                grid.innerHTML = content.slice(0, 8).map(createContentCard).join('');
+            } else {
+                grid.innerHTML = '<p class="no-results">لا يوجد محتوى مميز حالياً</p>';
+            }
         }
 
-        setInterval(changeWelcomeMessage, 7000);
+        // Load Ramadan series
+        async function loadRamadan() {
+            const grid = document.getElementById('ramadanGrid');
+            const series = await fetchContent('ramadan');
+            
+            if (series && series.length > 0) {
+                grid.innerHTML = series.slice(0, 6).map(createContentCard).join('');
+            } else {
+                grid.innerHTML = '<p class="no-results">قريباً...</p>';
+            }
+        }
 
-        // تأثيرات الروابط
-        document.addEventListener('DOMContentLoaded', function() {
-            const links = document.querySelectorAll('.social-link');
-            links.forEach((link, index) => {
-                link.style.opacity = '0';
-                link.style.transform = 'translateY(20px)';
-                
-                setTimeout(() => {
-                    link.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-                    link.style.opacity = '1';
-                    link.style.transform = 'translateY(0)';
-                }, index * 100 + 2000);
+        // Load movies
+        let currentMovieSort = 'rating';
+        async function loadMovies(sort = 'rating') {
+            currentMovieSort = sort;
+            const grid = document.getElementById('moviesGrid');
+            grid.innerHTML = '<div class="loading"><div class="spinner"></div><p>جاري التحميل...</p></div>';
+            
+            const movies = await fetchContent(`movies&sort=${sort}`);
+            
+            if (movies && movies.length > 0) {
+                grid.innerHTML = movies.slice(0, 8).map(createContentCard).join('');
+            } else {
+                grid.innerHTML = '<p class="no-results">لا توجد أفلام متاحة حالياً</p>';
+            }
+        }
+
+        // Load series
+        let currentSeriesSort = 'rating';
+        async function loadSeries(sort = 'rating') {
+            currentSeriesSort = sort;
+            const grid = document.getElementById('seriesGrid');
+            grid.innerHTML = '<div class="loading"><div class="spinner"></div><p>جاري التحميل...</p></div>';
+            
+            const series = await fetchContent(`series&sort=${sort}`);
+            
+            if (series && series.length > 0) {
+                grid.innerHTML = series.slice(0, 8).map(createContentCard).join('');
+            } else {
+                grid.innerHTML = '<p class="no-results">لا توجد مسلسلات متاحة حالياً</p>';
+            }
+        }
+
+        // Filter functions
+        function filterMovies(sort) {
+            document.querySelectorAll('#movies .filter-tab').forEach(tab => {
+                tab.classList.remove('active');
             });
+            event.target.classList.add('active');
+            loadMovies(sort);
+        }
+
+        function filterSeries(sort) {
+            document.querySelectorAll('#series .filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            loadSeries(sort);
+        }
+
+        // Search functionality
+        let searchTimeout;
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            clearTimeout(searchTimeout);
+            const query = e.target.value.trim();
+            
+            if (query.length < 2) {
+                document.getElementById('searchResults').classList.remove('active');
+                return;
+            }
+            
+            searchTimeout = setTimeout(() => performSearch(query), 500);
         });
 
-        document.querySelectorAll('.social-link').forEach(link => {
+        async function performSearch(query) {
+            const searchGrid = document.getElementById('searchGrid');
+            const searchResults = document.getElementById('searchResults');
+            const noResults = document.getElementById('noResults');
+            
+            searchResults.classList.add('active');
+            searchGrid.innerHTML = '<div class="loading"><div class="spinner"></div><p>جاري البحث...</p></div>';
+            noResults.style.display = 'none';
+            
+            const results = await fetchContent(`search&q=${encodeURIComponent(query)}`);
+            
+            if (results && results.length > 0) {
+                searchGrid.innerHTML = results.map(createContentCard).join('');
+            } else {
+                searchGrid.innerHTML = '';
+                noResults.style.display = 'block';
+            }
+        }
+
+        // Open content details
+        function openContent(id, type) {
+            // Redirect to watch page or open modal
+            window.location.href = `watch.php?id=${id}&type=${type}`;
+        }
+
+        // Filter by category
+        function filterByCategory(category) {
+            // Implement category filtering
+            console.log('Filtering by category:', category);
+        }
+
+        // Scroll to content
+        function scrollToContent() {
+            document.getElementById('featured').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Nav link filters
+        document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function(e) {
-                this.style.transform = 'scale(0.95) translateX(-8px)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 200);
+                e.preventDefault();
+                const filter = this.dataset.filter;
+                
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                
+                if (filter === 'ramadan') {
+                    document.getElementById('ramadan').scrollIntoView({ behavior: 'smooth' });
+                } else if (filter === 'movie') {
+                    document.getElementById('movies').scrollIntoView({ behavior: 'smooth' });
+                } else if (filter === 'serie') {
+                    document.getElementById('series').scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             });
         });
 
-        // إخفاء شريط التحميل بعد انتهاء التحميل
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.querySelector('.loading-bar').style.opacity = '0';
-                setTimeout(() => {
-                    document.querySelector('.loading-bar').remove();
-                }, 500);
-            }, 2000);
+        // Initialize page
+        window.addEventListener('DOMContentLoaded', function() {
+            loadFeatured();
+            loadRamadan();
+            loadMovies();
+            loadSeries();
         });
     </script>
 </body>
